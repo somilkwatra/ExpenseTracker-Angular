@@ -79,33 +79,41 @@ export class ExpenseHomeComponent implements OnInit {
 
     switch (rangeType) {
       case 'thisWeek':
-        start = this.getStartOfWeek(now);
-        end = this.getEndOfWeek(now);
+        start = new Date(
+          now.setDate(
+            now.getDate() - (now.getDay() === 0 ? 6 : now.getDay() - 1)
+          )
+        );
+        end = new Date(now.setDate(now.getDate() + 6));
+
         break;
       case 'lastWeek':
-        const lastWeek = new Date(now);
-        lastWeek.setDate(now.getDate() - 7);
-        start = this.getStartOfWeek(lastWeek);
-        end = this.getEndOfWeek(lastWeek);
+        const lastWeekStart = new Date(
+          now.setDate(now.getDate() - now.getDay() - 7)
+        );
+        start = new Date(lastWeekStart.setDate(lastWeekStart.getDate()));
+        end = new Date(lastWeekStart.setDate(lastWeekStart.getDate() + 6));
         break;
       case 'thisMonth':
         start = new Date(now.getFullYear(), now.getMonth(), 1);
         end = new Date(now.getFullYear(), now.getMonth() + 1, 0);
         break;
       case 'lastMonth':
-        const lastMonth = new Date(now);
-        lastMonth.setMonth(now.getMonth() - 1);
-        start = new Date(lastMonth.getFullYear(), lastMonth.getMonth(), 1);
-        end = new Date(lastMonth.getFullYear(), lastMonth.getMonth() + 1, 0);
+        const lastMonthStart = new Date(
+          now.getFullYear(),
+          now.getMonth() - 1,
+          1
+        );
+        start = lastMonthStart;
+        end = new Date(now.getFullYear(), now.getMonth(), 0);
         break;
       case 'thisYear':
         start = new Date(now.getFullYear(), 0, 1);
         end = new Date(now.getFullYear(), 11, 31);
         break;
       case 'lastYear':
-        const lastYear = now.getFullYear() - 1;
-        start = new Date(lastYear, 0, 1);
-        end = new Date(lastYear, 11, 31);
+        start = new Date(now.getFullYear() - 1, 0, 1);
+        end = new Date(now.getFullYear() - 1, 11, 31);
         break;
       default:
         return;
@@ -118,7 +126,7 @@ export class ExpenseHomeComponent implements OnInit {
 
   getStartOfWeek(date: Date): Date {
     const day = date.getDay();
-    const diff = date.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+    const diff = date.getDate() - day + (day === 0 ? -6 : 1); // adjust when day is Sunday
     return new Date(date.setDate(diff));
   }
 
