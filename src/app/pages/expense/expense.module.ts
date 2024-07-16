@@ -16,6 +16,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [ExpenseHomeComponent, LogExpenseComponent],
@@ -34,6 +35,7 @@ import { MatCardModule } from '@angular/material/card';
     MatNativeDateModule,
     MatTableModule,
     MatCardModule,
+    MatListModule,
   ],
   exports: [ExpenseHomeComponent, LogExpenseComponent],
 })
