@@ -1,0 +1,48 @@
+<form #signUpForm="ngForm" (ngSubmit)="SignUp(signUpForm.value)">
+  <h1>Sign Up</h1>
+
+  <mat-form-field>
+    <mat-label>Enter Your Name</mat-label>
+    <input matInput name="name" placeholder="Username" ngModel required />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Enter Your Email</mat-label>
+    <input
+      matInput
+      type="email"
+      name="email"
+      placeholder="Email"
+      ngModel
+      required
+    />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Enter Your Password</mat-label>
+    <input
+      matInput
+      type="password"
+      name="password"
+      placeholder="Password"
+      ngModel
+      required
+    />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Confirm Password</mat-label>
+    <input
+      matInput
+      type="password"
+      name="confirmPassword"
+      placeholder="Confirm Password"
+      ngModel
+      required
+    />
+  </mat-form-field>
+  <a (click)="navigateToSignin()">Already Have Account!!</a>
+  <button type="submit" mat-raised-button class="custom-primary-button">
+    Sign Up
+  </button>
+</form>

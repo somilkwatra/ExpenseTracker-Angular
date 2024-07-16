@@ -1,0 +1,8 @@
+<div>
+  <h1 mat-dialog-title>Successful!</h1>
+  <div *ngIf="isLoggedIn" mat-dialog-content>Welcome to my Expense Tracker</div>
+  <div *ngIf="!isLoggedIn" mat-dialog-content>Thanks for your time</div>
+  <div mat-dialog-actions>
+    <button mat-button mat-dialog-close color="primary">Close</button>
+  </div>
+</div>

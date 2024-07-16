@@ -1,0 +1,17 @@
+<form #category="ngForm" (ngSubmit)="addCategory(category.value)">
+  <h1>Add Category</h1>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Category Name</mat-label>
+    <input
+      matInput
+      name="name"
+      [(ngModel)]="categoryName"
+      placeholder="Enter Category Name"
+      required
+    />
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit">Add</button>
+  <button mat-raised-button color="warn" (click)="closeDialog()">Close</button>
+</form>

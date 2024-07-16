@@ -1,0 +1,66 @@
+<mat-toolbar color="primary" class="custom-toolbar">
+  <span class="toolbar-title">Expense Tracker</span>
+  <div class="toolbar-buttons" *ngIf="!isLoggedIn">
+    <button
+      mat-raised-button
+      color="primary"
+      class="custom-primary-button"
+      routerLink="signup"
+    >
+      SignUp
+    </button>
+
+    <button
+      mat-raised-button
+      color="primary"
+      class="custom-primary-button"
+      routerLink="signin"
+    >
+      SignIn
+    </button>
+  </div>
+
+  <div class="toolbar-buttons" *ngIf="isLoggedIn">
+    <button
+      mat-raised-button
+      color="primary"
+      class="custom-primary-button"
+      routerLink="expense-home"
+    >
+      Expenses
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      class="custom-primary-button"
+      routerLink="logExpense"
+    >
+      Log-Expense
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      class="custom-primary-button"
+      routerLink="#"
+    >
+      Report
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      class="custom-primary-button"
+      routerLink="account"
+    >
+      Account
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      class="custom-primary-button"
+      routerLink="#"
+      (click)="logout()"
+    >
+      Logout
+    </button>
+  </div>
+</mat-toolbar>

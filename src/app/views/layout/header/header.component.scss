@@ -1,0 +1,28 @@
+.custom-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 16px; /* Adjust as needed */
+  }
+  
+  .toolbar-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white; /* Text color */
+    text-transform: uppercase;
+  }
+  
+  .toolbar-buttons {
+    display: flex;
+    gap: 8px; /* Adjust space between buttons */
+  }
+  
+  .custom-primary-button {
+    background-color: #0ddc33 !important; /* Primary button color */
+    color: white; /* Button text color */
+  }
+  
+  .custom-primary-button:hover {
+    background-color: #184803 !important; /* Darker shade on hover */
+  }
+  

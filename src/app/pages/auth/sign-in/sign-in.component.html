@@ -1,0 +1,32 @@
+<form #signInForm="ngForm" (ngSubmit)="SignIn(signInForm.value)">
+  <h1>Sign In</h1>
+
+  <mat-form-field>
+    <mat-label>Enter Your Email</mat-label>
+    <input
+      matInput
+      type="email"
+      name="email"
+      placeholder="Email"
+      ngModel
+      required
+    />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Enter Your Password</mat-label>
+    <input
+      matInput
+      type="password"
+      name="password"
+      placeholder="Password"
+      ngModel
+      required
+    />
+  </mat-form-field>
+  <a (click)="navigateToSignup()">Don't have account!!</a>
+
+  <button type="submit" mat-raised-button class="custom-primary-button">
+    Sign In
+  </button>
+</form>

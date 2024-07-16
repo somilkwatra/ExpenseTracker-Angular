@@ -1,0 +1,55 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .mt-5 {
+    margin-top: 3rem;
+  }
+  
+  .mb-4 {
+    margin-bottom: 1.5rem;
+  }
+  
+  .mx-1 {
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  .mat-form-field {
+    width: 200px;
+    margin: 0 10px;
+  }
+  
+  .mat-table {
+    width: 100%;
+  }
+  
+  .mat-header-cell, .mat-cell {
+    text-align: center;
+    padding: 8px;
+  }
+  
+  .mat-toolbar {
+    background-color: #3f51b5;
+    color: white;
+  }
+  
+  #total-amount {
+    font-weight: bold;
+  }
+  
+  mat-card {
+    padding: 20px;
+    margin-top: 20px;
+  }
+  
+  button[mat-raised-button] {
+    margin: 0 5px;
+  }
+  
