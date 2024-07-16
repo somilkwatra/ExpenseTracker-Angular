@@ -4,7 +4,7 @@
       mat-raised-button
       color="primary"
       class="mx-1"
-      (click)="applyThisWeek()"
+      (click)="applyDateRangeByType('thisWeek')"
     >
       This week
     </button>
@@ -12,7 +12,7 @@
       mat-raised-button
       color="primary"
       class="mx-1"
-      (click)="applyThisMonth()"
+      (click)="applyDateRangeByType('thisMonth')"
     >
       This month
     </button>
@@ -20,7 +20,7 @@
       mat-raised-button
       color="primary"
       class="mx-1"
-      (click)="applyLastWeek()"
+      (click)="applyDateRangeByType('lastWeek')"
     >
       Last week
     </button>
@@ -28,7 +28,7 @@
       mat-raised-button
       color="primary"
       class="mx-1"
-      (click)="applyLastMonth()"
+      (click)="applyDateRangeByType('lastMonth')"
     >
       Last month
     </button>
@@ -36,7 +36,7 @@
       mat-raised-button
       color="primary"
       class="mx-1"
-      (click)="applyThisYear()"
+      (click)="applyDateRangeByType('thisYear')"
     >
       This year
     </button>
@@ -44,7 +44,7 @@
       mat-raised-button
       color="primary"
       class="mx-1"
-      (click)="applyLastYear()"
+      (click)="applyDateRangeByType('lastYear')"
     >
       Last year
     </button>

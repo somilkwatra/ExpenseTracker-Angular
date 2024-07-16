@@ -3,17 +3,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ExpenseService } from '../../../services/expenses/expense.service';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { DatePipe } from '@angular/common';
-import {
-  startOfWeek,
-  endOfWeek,
-  startOfMonth,
-  endOfMonth,
-  startOfYear,
-  endOfYear,
-  subWeeks,
-  subMonths,
-  subYears,
-} from 'date-fns';
 import { AuthService } from '../../../services/auth/auth.service';
 
 interface Expense {
@@ -38,7 +27,7 @@ export class ExpenseHomeComponent implements OnInit {
 
   startdate: string = '';
   enddate: string = '';
-  userId: string = ''; // Added user ID
+  userId: string = '';
 
   constructor(
     private expenseService: ExpenseService,
@@ -46,8 +35,6 @@ export class ExpenseHomeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // this.userId = sessionStorage.getItem('id') || '';
-
     const token = localStorage.getItem('token');
     this.userId = this.authService.getUserIdFromToken(token) || '';
   }
@@ -85,55 +72,58 @@ export class ExpenseHomeComponent implements OnInit {
     this.getExpenses();
   }
 
-  applyThisWeek() {
+  applyDateRangeByType(rangeType: string) {
     const now = new Date();
-    this.startdate = startOfWeek(now, { weekStartsOn: 1 })
-      .toISOString()
-      .split('T')[0];
-    this.enddate = endOfWeek(now, { weekStartsOn: 1 })
-      .toISOString()
-      .split('T')[0];
+    let start: Date;
+    let end: Date;
+
+    switch (rangeType) {
+      case 'thisWeek':
+        start = this.getStartOfWeek(now);
+        end = this.getEndOfWeek(now);
+        break;
+      case 'lastWeek':
+        const lastWeek = new Date(now);
+        lastWeek.setDate(now.getDate() - 7);
+        start = this.getStartOfWeek(lastWeek);
+        end = this.getEndOfWeek(lastWeek);
+        break;
+      case 'thisMonth':
+        start = new Date(now.getFullYear(), now.getMonth(), 1);
+        end = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+        break;
+      case 'lastMonth':
+        const lastMonth = new Date(now);
+        lastMonth.setMonth(now.getMonth() - 1);
+        start = new Date(lastMonth.getFullYear(), lastMonth.getMonth(), 1);
+        end = new Date(lastMonth.getFullYear(), lastMonth.getMonth() + 1, 0);
+        break;
+      case 'thisYear':
+        start = new Date(now.getFullYear(), 0, 1);
+        end = new Date(now.getFullYear(), 11, 31);
+        break;
+      case 'lastYear':
+        const lastYear = now.getFullYear() - 1;
+        start = new Date(lastYear, 0, 1);
+        end = new Date(lastYear, 11, 31);
+        break;
+      default:
+        return;
+    }
+
+    this.startdate = start.toISOString().split('T')[0];
+    this.enddate = end.toISOString().split('T')[0];
     this.getExpenses();
   }
 
-  applyThisMonth() {
-    const now = new Date();
-    this.startdate = startOfMonth(now).toISOString().split('T')[0];
-    this.enddate = endOfMonth(now).toISOString().split('T')[0];
-    this.getExpenses();
+  getStartOfWeek(date: Date): Date {
+    const day = date.getDay();
+    const diff = date.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+    return new Date(date.setDate(diff));
   }
 
-  applyLastWeek() {
-    const now = new Date();
-    const lastWeekStart = startOfWeek(subWeeks(now, 1), { weekStartsOn: 1 });
-    const lastWeekEnd = endOfWeek(subWeeks(now, 1), { weekStartsOn: 1 });
-    this.startdate = lastWeekStart.toISOString().split('T')[0];
-    this.enddate = lastWeekEnd.toISOString().split('T')[0];
-    this.getExpenses();
-  }
-
-  applyLastMonth() {
-    const now = new Date();
-    const lastMonthStart = startOfMonth(subMonths(now, 1));
-    const lastMonthEnd = endOfMonth(subMonths(now, 1));
-    this.startdate = lastMonthStart.toISOString().split('T')[0];
-    this.enddate = lastMonthEnd.toISOString().split('T')[0];
-    this.getExpenses();
-  }
-
-  applyThisYear() {
-    const now = new Date();
-    this.startdate = startOfYear(now).toISOString().split('T')[0];
-    this.enddate = endOfYear(now).toISOString().split('T')[0];
-    this.getExpenses();
-  }
-
-  applyLastYear() {
-    const now = new Date();
-    const lastYearStart = startOfYear(subYears(now, 1));
-    const lastYearEnd = endOfYear(subYears(now, 1));
-    this.startdate = lastYearStart.toISOString().split('T')[0];
-    this.enddate = lastYearEnd.toISOString().split('T')[0];
-    this.getExpenses();
+  getEndOfWeek(date: Date): Date {
+    const startOfWeek = this.getStartOfWeek(date);
+    return new Date(startOfWeek.setDate(startOfWeek.getDate() + 6));
   }
 }
