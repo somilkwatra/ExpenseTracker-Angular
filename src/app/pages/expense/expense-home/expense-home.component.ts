@@ -123,15 +123,4 @@ export class ExpenseHomeComponent implements OnInit {
     this.enddate = end.toISOString().split('T')[0];
     this.getExpenses();
   }
-
-  getStartOfWeek(date: Date): Date {
-    const day = date.getDay();
-    const diff = date.getDate() - day + (day === 0 ? -6 : 1); // adjust when day is Sunday
-    return new Date(date.setDate(diff));
-  }
-
-  getEndOfWeek(date: Date): Date {
-    const startOfWeek = this.getStartOfWeek(date);
-    return new Date(startOfWeek.setDate(startOfWeek.getDate() + 6));
-  }
 }
