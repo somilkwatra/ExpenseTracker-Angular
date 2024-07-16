@@ -1,3 +1,4 @@
+import { AuthService } from './../../../services/auth/auth.service';
 import { category } from './../../../shared/model';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
@@ -20,7 +21,8 @@ export class LogExpenseComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private categoryService: CategoryService,
-    private expenseService: ExpenseService
+    private expenseService: ExpenseService,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -42,7 +44,10 @@ export class LogExpenseComponent implements OnInit {
   }
 
   addExpenses(data: any) {
-    const userId = sessionStorage.getItem('id');
+    // const userId = sessionStorage.getItem('id');
+    const token = localStorage.getItem('token');
+
+    const userId = this.authService.getUserIdFromToken(token);
     if (!userId) {
       console.error('User ID not found in local storage');
       return;
