@@ -1,0 +1,44 @@
+<div class="expense-reports">
+  <h1>Expense Reports</h1>
+  <div>
+    <p>
+      Weekly Change:
+      <span
+        [ngClass]="{
+          'red-text': weeklyChange !== null && weeklyChange < 0,
+          'green-text': weeklyChange !== null && weeklyChange >= 0
+        }"
+      >
+        {{
+          weeklyChange !== null ? weeklyChange.toFixed(2) + "%" : "Loading..."
+        }}
+      </span>
+    </p>
+    <p>
+      Monthly Change:
+      <span
+        [ngClass]="{
+          'red-text': monthlyChange !== null && monthlyChange < 0,
+          'green-text': monthlyChange !== null && monthlyChange >= 0
+        }"
+      >
+        {{
+          monthlyChange !== null ? monthlyChange.toFixed(2) + "%" : "Loading..."
+        }}
+      </span>
+    </p>
+    <p>
+      Yearly Change:
+      <span
+        [ngClass]="{
+          'red-text': yearlyChange !== null && yearlyChange < 0,
+          'green-text': yearlyChange !== null && yearlyChange >= 0
+        }"
+      >
+        {{
+          yearlyChange !== null ? yearlyChange.toFixed(2) + "%" : "Loading..."
+        }}
+      </span>
+    </p>
+  </div>
+</div>

@@ -74,7 +74,7 @@ export class LogExpenseComponent implements OnInit {
     this.categoryService.deleteCategory(id).subscribe(
       () => {
         this.categories = this.categories.filter(
-          (category) => category.id !== id
+          (category) => category._id !== id
         );
       },
       (error) => {

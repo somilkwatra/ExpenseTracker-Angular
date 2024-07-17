@@ -17,9 +17,10 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
+import { ReportsComponent } from './reports/reports.component';
 
 @NgModule({
-  declarations: [ExpenseHomeComponent, LogExpenseComponent],
+  declarations: [ExpenseHomeComponent, LogExpenseComponent, ReportsComponent],
   imports: [
     CommonModule,
     MatInputModule,
@@ -37,6 +38,6 @@ import { MatListModule } from '@angular/material/list';
     MatCardModule,
     MatListModule,
   ],
-  exports: [ExpenseHomeComponent, LogExpenseComponent],
+  exports: [ExpenseHomeComponent, LogExpenseComponent, ReportsComponent],
 })
 export class ExpenseModule {}

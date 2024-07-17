@@ -23,15 +23,27 @@
     <mat-select [(ngModel)]="Categories" name="category" required>
       <mat-option *ngFor="let category of categories" [value]="category">
         {{ category.name }}
-        <!-- <button mat-icon-button color="warn">
+        <button
+          mat-icon-button
+          color="warn"
+          (click)="deleteCategory(category._id)"
+        >
           <mat-icon>delete</mat-icon>
-        </button> -->
+        </button>
       </mat-option>
+      <button
+        mat-raised-button
+        color="primary"
+        type="button"
+        (click)="showDialog()"
+      >
+        + (Add Categories)
+      </button>
     </mat-select>
   </mat-form-field>
-  <button mat-button color="primary" type="button" (click)="showDialog()">
+  <!-- <button mat-button color="primary" type="button" (click)="showDialog()">
     + (Add Categories)
-  </button>
+  </button> -->
 
   <mat-form-field appearance="outline">
     <mat-label>Enter Notes</mat-label>

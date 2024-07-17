@@ -73,54 +73,59 @@ export class ExpenseHomeComponent implements OnInit {
   }
 
   applyDateRangeByType(rangeType: string) {
-    const now = new Date();
-    let start: Date;
-    let end: Date;
-
     switch (rangeType) {
       case 'thisWeek':
-        start = new Date(
-          now.setDate(
-            now.getDate() - (now.getDay() === 0 ? 6 : now.getDay() - 1)
-          )
-        );
-        end = new Date(now.setDate(now.getDate() + 6));
-
+        this.setThisWeekRange();
         break;
       case 'lastWeek':
-        const lastWeekStart = new Date(
-          now.setDate(now.getDate() - now.getDay() - 7)
-        );
-        start = new Date(lastWeekStart.setDate(lastWeekStart.getDate()));
-        end = new Date(lastWeekStart.setDate(lastWeekStart.getDate() + 6));
+        this.setLastWeekRange();
         break;
       case 'thisMonth':
-        start = new Date(now.getFullYear(), now.getMonth(), 1);
-        end = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+        this.setThisMonthRange();
         break;
       case 'lastMonth':
-        const lastMonthStart = new Date(
-          now.getFullYear(),
-          now.getMonth() - 1,
-          1
-        );
-        start = lastMonthStart;
-        end = new Date(now.getFullYear(), now.getMonth(), 0);
+        this.setLastMonthRange();
         break;
       case 'thisYear':
-        start = new Date(now.getFullYear(), 0, 1);
-        end = new Date(now.getFullYear(), 11, 31);
+        this.setThisYearRange();
         break;
       case 'lastYear':
-        start = new Date(now.getFullYear() - 1, 0, 1);
-        end = new Date(now.getFullYear() - 1, 11, 31);
+        this.setLastYearRange();
         break;
       default:
         return;
     }
 
-    this.startdate = start.toISOString().split('T')[0];
-    this.enddate = end.toISOString().split('T')[0];
     this.getExpenses();
+  }
+
+  private setThisWeekRange() {
+    this.startdate = this.expenseService.getThisWeekStartDate();
+    this.enddate = this.expenseService.getThisWeekEndDate();
+  }
+
+  private setLastWeekRange() {
+    this.startdate = this.expenseService.getLastWeekStartDate();
+    this.enddate = this.expenseService.getLastWeekEndDate();
+  }
+
+  private setThisMonthRange() {
+    this.startdate = this.expenseService.getThisMonthStartDate();
+    this.enddate = this.expenseService.getThisMonthEndDate();
+  }
+
+  private setLastMonthRange() {
+    this.startdate = this.expenseService.getLastMonthStartDate();
+    this.enddate = this.expenseService.getLastMonthEndDate();
+  }
+
+  private setThisYearRange() {
+    this.startdate = this.expenseService.getThisYearStartDate();
+    this.enddate = this.expenseService.getThisYearEndDate();
+  }
+
+  private setLastYearRange() {
+    this.startdate = this.expenseService.getLastYearStartDate();
+    this.enddate = this.expenseService.getLastYearEndDate();
   }
 }

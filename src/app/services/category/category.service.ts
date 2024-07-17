@@ -14,7 +14,7 @@ export class CategoryService {
     return this.http.post('http://localhost:5000/api/category', data);
   }
 
-  getCategoryByUserId(): Observable<category[]> {
+  getCategoryByUserId(category?: any): Observable<category[]> {
     //const userId = sessionStorage.getItem()
     const token = localStorage.getItem('token');
     const userId = this.authService.getUserIdFromToken(token);

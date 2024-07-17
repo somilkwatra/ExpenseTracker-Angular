@@ -13,6 +13,6 @@ export interface account {
   newPassword: string;
 }
 export interface category {
+  _id: string;
   name: string;
-  id: string;
 }

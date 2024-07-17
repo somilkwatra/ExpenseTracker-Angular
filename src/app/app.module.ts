@@ -31,6 +31,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { ExpenseDialogComponent } from './shared/expense-dialog/expense-dialog.component';
+import { ReportsComponent } from './pages/expense/reports/reports.component';
+// import { ReportComponent } from './pages/expense/report/report.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -51,6 +53,7 @@ const routes: Routes = [
     path: 'category',
     component: CategoryDialogComponent,
   },
+  { path: 'report', component: ReportsComponent },
 ];
 
 @NgModule({
