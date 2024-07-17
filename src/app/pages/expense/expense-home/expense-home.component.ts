@@ -4,16 +4,20 @@ import { ExpenseService } from '../../../services/expenses/expense.service';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { DatePipe } from '@angular/common';
 import { AuthService } from '../../../services/auth/auth.service';
+import { Dialog } from '@angular/cdk/dialog';
+import { UpdateDialogComponent } from '../../../shared/update-dialog/update-dialog.component';
+import { Expense } from '../../../shared/model';
 
-interface Expense {
-  sno: number;
-  date: string;
-  name: string;
-  amount: number;
-  category: {
-    name: string;
-  };
-}
+// interface Expense {
+//   _id: string;
+//   sno: number;
+//   date: string;
+//   name: string;
+//   amount: number;
+//   category: {
+//     name: string;
+//   };
+// }
 
 @Component({
   selector: 'app-expense-home',
@@ -41,7 +45,8 @@ export class ExpenseHomeComponent implements OnInit {
 
   constructor(
     private expenseService: ExpenseService,
-    private authService: AuthService
+    private authService: AuthService,
+    private dialog: Dialog
   ) {}
 
   ngOnInit() {
@@ -137,5 +142,25 @@ export class ExpenseHomeComponent implements OnInit {
     this.startdate = start.toISOString().split('T')[0];
     this.enddate = end.toISOString().split('T')[0];
     this.getExpenses();
+  }
+
+  deleteExpense(id: string) {
+    this.expenseService.deleteExpense(id).subscribe(
+      () => {
+        // Remove the deleted expense from the dataSource
+        this.dataSource.data = this.dataSource.data.filter(
+          (expense) => expense._id !== id
+        );
+        console.log('Expense deleted successfully');
+        this.calculateTotalAmount(); // Recalculate total amount after deletion
+      },
+      (error) => {
+        console.error('Error deleting expense:', error);
+      }
+    );
+  }
+
+  UpdateButton() {
+    this.dialog.open(UpdateDialogComponent);
   }
 }

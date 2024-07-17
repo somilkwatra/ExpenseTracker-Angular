@@ -1,0 +1,58 @@
+<form #addExpense="ngForm" class="add-expense-form">
+  <h1>Update Expenses</h1>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Enter Expense Name</mat-label>
+    <input matInput name="name" placeholder="Expense Name" ngModel required />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Enter Amount</mat-label>
+    <input
+      matInput
+      type="number"
+      name="amount"
+      placeholder="Enter Amount"
+      ngModel
+      required
+    />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Category</mat-label>
+    <mat-select required>
+      <mat-option>
+        <button mat-icon-button color="warn">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-option>
+      <mat-option>
+        <button mat-raised-button color="primary" type="button">
+          + (Add Categories)
+        </button>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Enter Notes</mat-label>
+    <textarea
+      matInput
+      name="notes"
+      placeholder="Enter notes"
+      ngModel
+      required
+    ></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Choose Date</mat-label>
+    <input matInput [matDatepicker]="picker" name="date" required />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <button type="submit" mat-raised-button class="custom-primary-button">
+    Update Expense
+  </button>
+</form>

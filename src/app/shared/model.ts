@@ -21,3 +21,13 @@ export interface CategoryUsage {
   percentage: number;
   count: number;
 }
+export interface Expense {
+  _id: string;
+  sno: number;
+  date: string;
+  name: string;
+  amount: number;
+  category: {
+    name: string;
+  };
+}

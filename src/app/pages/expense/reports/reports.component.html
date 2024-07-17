@@ -2,8 +2,8 @@
   <h1>Expense Reports</h1>
 
   <div class="change-section">
-    <p>
-      Weekly Change:
+    <div class="change-item">
+      <p>Weekly Change:</p>
       <span
         [ngClass]="{
           'red-text': weeklyChange !== null && weeklyChange < 0,
@@ -15,9 +15,9 @@
           weeklyChange !== null ? weeklyChange.toFixed(2) + "%" : "Loading..."
         }}
       </span>
-    </p>
-    <p>
-      Monthly Change:
+    </div>
+    <div class="change-item">
+      <p>Monthly Change:</p>
       <span
         [ngClass]="{
           'red-text': monthlyChange !== null && monthlyChange < 0,
@@ -29,9 +29,9 @@
           monthlyChange !== null ? monthlyChange.toFixed(2) + "%" : "Loading..."
         }}
       </span>
-    </p>
-    <p>
-      Yearly Change:
+    </div>
+    <div class="change-item">
+      <p>Yearly Change:</p>
       <span
         [ngClass]="{
           'red-text': yearlyChange !== null && yearlyChange < 0,
@@ -43,20 +43,26 @@
           yearlyChange !== null ? yearlyChange.toFixed(2) + "%" : "Loading..."
         }}
       </span>
-    </p>
+    </div>
   </div>
 
   <div *ngIf="mostUsedCategory || leastUsedCategory" class="category-section">
-    <div *ngIf="mostUsedCategory">
-      <p>Most Used Category: {{ mostUsedCategory.name }}</p>
-      <p>Usage Count: {{ mostUsedCategory.count }}</p>
-      <p>Percentage: {{ mostUsedCategory.percentage }}</p>
+    <div *ngIf="mostUsedCategory" class="category-item">
+      <p class="category-title">Most Used Category:</p>
+      <p class="category-name">{{ mostUsedCategory.name }}</p>
+      <p class="category-count">Usage Count: {{ mostUsedCategory.count }}</p>
+      <p class="category-percentage">
+        Percentage: {{ mostUsedCategory.percentage }}
+      </p>
     </div>
 
-    <div *ngIf="leastUsedCategory">
-      <p>Least Used Category: {{ leastUsedCategory.name }}</p>
-      <p>Usage Count: {{ leastUsedCategory.count }}</p>
-      <p>Percentage: {{ leastUsedCategory.percentage }}</p>
+    <div *ngIf="leastUsedCategory" class="category-item">
+      <p class="category-title">Least Used Category:</p>
+      <p class="category-name">{{ leastUsedCategory.name }}</p>
+      <p class="category-count">Usage Count: {{ leastUsedCategory.count }}</p>
+      <p class="category-percentage">
+        Percentage: {{ leastUsedCategory.percentage }}
+      </p>
     </div>
   </div>
 </div>

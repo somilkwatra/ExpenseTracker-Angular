@@ -1,3 +1,4 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from './../../../services/auth/auth.service';
 import { category } from './../../../shared/model';
 import { Component, OnInit } from '@angular/core';
@@ -22,7 +23,8 @@ export class LogExpenseComponent implements OnInit {
     public dialog: MatDialog,
     private categoryService: CategoryService,
     private expenseService: ExpenseService,
-    private authService: AuthService
+    private authService: AuthService,
+    private snackBar: MatSnackBar // Inject MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -70,6 +72,7 @@ export class LogExpenseComponent implements OnInit {
       }
     });
   }
+
   deleteCategory(id: string) {
     this.categoryService.deleteCategory(id).subscribe(
       () => {
@@ -79,6 +82,13 @@ export class LogExpenseComponent implements OnInit {
       },
       (error) => {
         console.error(error);
+        this.snackBar.open(
+          'An expense has been associated with this category and it cannot be deleted.',
+          'Close',
+          {
+            duration: 5000, // Display duration in milliseconds
+          }
+        );
       }
     );
   }

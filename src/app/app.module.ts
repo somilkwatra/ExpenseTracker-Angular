@@ -22,6 +22,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { ExpenseDialogComponent } from './shared/expense-dialog/expense-dialog.component';
+import { UpdateDialogComponent } from './shared/update-dialog/update-dialog.component';
+import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -30,6 +33,7 @@ import { ExpenseDialogComponent } from './shared/expense-dialog/expense-dialog.c
     ErrorDialogComponent,
     CategoryDialogComponent,
     ExpenseDialogComponent,
+    UpdateDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,6 +53,8 @@ import { ExpenseDialogComponent } from './shared/expense-dialog/expense-dialog.c
     ReactiveFormsModule,
     MatDatepickerModule,
     NoopAnimationsModule,
+    MatSelectModule,
+    MatIconModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

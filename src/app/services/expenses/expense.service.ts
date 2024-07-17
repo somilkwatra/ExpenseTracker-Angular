@@ -210,8 +210,7 @@ export class ExpenseService {
     const endDate = new Date(now.getFullYear() - 1, 11, 31);
     return endDate.toISOString().split('T')[0];
   }
-
-  getCategoryName(categoryId: string) {
-    return this.http.get(`http://localhost:5000/api/category/${categoryId}`);
+  deleteExpense(id: string) {
+    return this.http.delete(`http://localhost:5000/api/expenses/${id}`);
   }
 }
