@@ -1,33 +1,95 @@
 .expense-reports {
+    max-width: 800px;
+    margin: 0 auto;
     padding: 20px;
+    background-color: #f9f9f9;
     border: 1px solid #ddd;
     border-radius: 8px;
-    background-color: #f9f9f9;
-    width: 300px;
-    margin: 0 auto;
-    text-align: center; 
-    font-family: Arial, sans-serif; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
   
   .expense-reports h1 {
-    font-size: 1.5em; 
-    margin-bottom: 15px;
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
   }
   
-  .expense-reports div {
-    margin-top: 15px; 
+  .expense-reports .change-section {
+    margin-bottom: 20px;
   }
   
-  .expense-reports p {
-    font-size: 1.2em; 
-    margin: 10px 0;
-  }
-  .red-text {
-    color: red;
+  .expense-reports .change-section p {
+    font-size: 18px;
+    margin-bottom: 10px;
   }
   
-  .green-text {
-    color: green;
+  .expense-reports .change-section .change-value {
+    font-size: 20px;
+    font-weight: bold;
   }
   
+  .expense-reports .change-section .green-text {
+    color: #0c0;
+  }
   
+  .expense-reports .change-section .red-text {
+    color: #c00;
+  }
+  
+  .expense-reports .category-section {
+    margin-top: 30px;
+    border-top: 1px solid #ddd;
+    padding-top: 20px;
+  }
+  
+  .expense-reports .category-section p {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  .expense-reports .category-section {
+    margin-top: 30px;
+    border-top: 1px solid #ddd;
+    padding-top: 20px;
+  }
+  
+  .expense-reports .category-section p {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  .expense-reports .change-section {
+    margin-bottom: 20px;
+  }
+  
+  .expense-reports .change-section p {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .expense-reports .change-section .change-value {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  .expense-reports .change-section .green-text {
+    color: #0c0;
+  }
+  
+  .expense-reports .change-section .red-text {
+    color: #c00;
+  }
+  .expense-reports {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .expense-reports h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+        

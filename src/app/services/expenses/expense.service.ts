@@ -34,10 +34,13 @@ export class ExpenseService {
 
   // Calculate percentage change
   public calculatePercentageChange(oldValue: number, newValue: number): number {
-    if (oldValue === 0) {
-      return newValue === 0 ? 0 : 100; // Avoid division by zero
+    if (oldValue === 0 && newValue === 0) {
+      return 0; // Both old and new values are zero
+    } else if (oldValue === 0) {
+      return 100; // Old value is zero, percentage change is 100%
+    } else {
+      return ((newValue - oldValue) / Math.abs(oldValue)) * 100;
     }
-    return ((newValue - oldValue) / oldValue) * 100;
   }
 
   // Get percentage change for week

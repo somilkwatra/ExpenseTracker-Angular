@@ -1,6 +1,7 @@
 <div class="expense-reports">
   <h1>Expense Reports</h1>
-  <div>
+
+  <div class="change-section">
     <p>
       Weekly Change:
       <span
@@ -8,6 +9,7 @@
           'red-text': weeklyChange !== null && weeklyChange < 0,
           'green-text': weeklyChange !== null && weeklyChange >= 0
         }"
+        class="change-value"
       >
         {{
           weeklyChange !== null ? weeklyChange.toFixed(2) + "%" : "Loading..."
@@ -21,6 +23,7 @@
           'red-text': monthlyChange !== null && monthlyChange < 0,
           'green-text': monthlyChange !== null && monthlyChange >= 0
         }"
+        class="change-value"
       >
         {{
           monthlyChange !== null ? monthlyChange.toFixed(2) + "%" : "Loading..."
@@ -34,11 +37,26 @@
           'red-text': yearlyChange !== null && yearlyChange < 0,
           'green-text': yearlyChange !== null && yearlyChange >= 0
         }"
+        class="change-value"
       >
         {{
           yearlyChange !== null ? yearlyChange.toFixed(2) + "%" : "Loading..."
         }}
       </span>
     </p>
+  </div>
+
+  <div *ngIf="mostUsedCategory || leastUsedCategory" class="category-section">
+    <div *ngIf="mostUsedCategory">
+      <p>Most Used Category: {{ mostUsedCategory.name }}</p>
+      <p>Usage Count: {{ mostUsedCategory.count }}</p>
+      <p>Percentage: {{ mostUsedCategory.percentage }}</p>
+    </div>
+
+    <div *ngIf="leastUsedCategory">
+      <p>Least Used Category: {{ leastUsedCategory.name }}</p>
+      <p>Usage Count: {{ leastUsedCategory.count }}</p>
+      <p>Percentage: {{ leastUsedCategory.percentage }}</p>
+    </div>
   </div>
 </div>

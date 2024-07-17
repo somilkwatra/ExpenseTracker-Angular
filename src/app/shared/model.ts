@@ -16,3 +16,8 @@ export interface category {
   _id: string;
   name: string;
 }
+export interface CategoryUsage {
+  name: string;
+  percentage: number;
+  count: number;
+}

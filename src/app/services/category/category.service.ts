@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { category } from '../../shared/model';
 import { AuthService } from '../auth/auth.service';
+import { CategoryUsage } from '../../shared/model';
 
 @Injectable({
   providedIn: 'root',
@@ -24,5 +25,17 @@ export class CategoryService {
   }
   deleteCategory(id: string) {
     return this.http.delete(`http://localhost:5000/api/category/${id}`);
+  }
+
+  mostUsedCategory(userId: string): Observable<CategoryUsage> {
+    return this.http.get<CategoryUsage>(
+      `http://localhost:5000/api/category/most-used/${userId}`
+    );
+  }
+
+  leastUsedCategory(userId: string): Observable<CategoryUsage> {
+    return this.http.get<CategoryUsage>(
+      `http://localhost:5000/api/category/least-used/${userId}`
+    );
   }
 }

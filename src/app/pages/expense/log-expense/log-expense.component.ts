@@ -38,15 +38,19 @@ export class LogExpenseComponent implements OnInit {
   }
 
   getCategoriesById() {
-    this.categoryService.getCategoryByUserId().subscribe((res: any) => {
-      this.categories = res;
-    });
+    this.categoryService.getCategoryByUserId().subscribe(
+      (res: any) => {
+        this.categories = res;
+        console.log('Categories loaded:', this.categories);
+      },
+      (error) => {
+        console.error('Error loading categories:', error);
+      }
+    );
   }
 
   addExpenses(data: any) {
-    // const userId = sessionStorage.getItem('id');
     const token = localStorage.getItem('token');
-
     const userId = this.authService.getUserIdFromToken(token);
     if (!userId) {
       console.error('User ID not found in local storage');
@@ -63,13 +67,19 @@ export class LogExpenseComponent implements OnInit {
     };
 
     console.log(expenseData);
-    this.expenseService.addExpense(expenseData).subscribe((res) => {
-      if (res) {
-        console.log('Data Sent Successfully');
-        this.dialog.open(ExpenseDialogComponent);
+    this.expenseService.addExpense(expenseData).subscribe(
+      (res) => {
+        if (res) {
+          console.log('Data Sent Successfully');
+          this.dialog.open(ExpenseDialogComponent);
+        }
+      },
+      (error) => {
+        console.error('Error adding expense:', error);
       }
-    });
+    );
   }
+
   deleteCategory(id: string) {
     this.categoryService.deleteCategory(id).subscribe(
       () => {
