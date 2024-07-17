@@ -10,6 +10,9 @@ interface Expense {
   date: string;
   name: string;
   amount: number;
+  category: {
+    name: string;
+  };
 }
 
 @Component({
@@ -22,7 +25,14 @@ export class ExpenseHomeComponent implements OnInit {
   startPicker: MatDatepicker<Date> | undefined;
   endPicker: MatDatepicker<Date> | undefined;
 
-  displayedColumns: string[] = ['sno', 'date', 'name', 'amount', 'action'];
+  displayedColumns: string[] = [
+    'sno',
+    'date',
+    'name',
+    'amount',
+    'category',
+    'action',
+  ];
   dataSource = new MatTableDataSource<Expense>([]);
 
   startdate: string = '';
@@ -43,7 +53,12 @@ export class ExpenseHomeComponent implements OnInit {
     if (this.startdate && this.enddate) {
       this.expenseService
         .getUserExpenses(this.userId, this.startdate, this.enddate)
-        .subscribe((expenses) => {
+        .subscribe((expenses: any[]) => {
+          console.log(expenses);
+          // Map through expenses to populate category name
+          expenses.forEach((expense) => {
+            expense.category = { name: expense.category }; // Assigning category as an object with 'name' property
+          });
           this.dataSource.data = expenses;
           this.calculateTotalAmount();
         });

@@ -128,9 +128,12 @@
       </ng-container>
 
       <!-- Category Column (assuming 'category' exists in your Expense interface) -->
+      <!-- Category Column -->
       <ng-container matColumnDef="category">
         <mat-header-cell *matHeaderCellDef> Category </mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.category }}</mat-cell>
+        <mat-cell *matCellDef="let element">{{
+          element.categoryId.name
+        }}</mat-cell>
       </ng-container>
 
       <!-- Action Column -->

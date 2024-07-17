@@ -131,7 +131,7 @@ export class ExpenseService {
   }
 
   // Helper functions to get date ranges
-  public getThisWeekStartDate(): string {
+  getThisWeekStartDate(): string {
     const now = new Date();
     const day = now.getDay();
     const diff = now.getDate() - day + (day === 0 ? -6 : 1);
@@ -139,7 +139,7 @@ export class ExpenseService {
     return startDate.toISOString().split('T')[0];
   }
 
-  public getThisWeekEndDate(): string {
+  getThisWeekEndDate(): string {
     const now = new Date();
     const day = now.getDay();
     const diff = now.getDate() - day + (day === 0 ? -6 : 1);
@@ -147,7 +147,7 @@ export class ExpenseService {
     return endDate.toISOString().split('T')[0];
   }
 
-  public getLastWeekStartDate(): string {
+  getLastWeekStartDate(): string {
     const now = new Date();
     const day = now.getDay();
     const diff = now.getDate() - day - 7 + (day === 0 ? -6 : 1);
@@ -155,7 +155,7 @@ export class ExpenseService {
     return startDate.toISOString().split('T')[0];
   }
 
-  public getLastWeekEndDate(): string {
+  getLastWeekEndDate(): string {
     const now = new Date();
     const day = now.getDay();
     const diff = now.getDate() - day - 7 + (day === 0 ? -6 : 1);
@@ -163,51 +163,55 @@ export class ExpenseService {
     return endDate.toISOString().split('T')[0];
   }
 
-  public getThisMonthStartDate(): string {
+  getThisMonthStartDate(): string {
     const now = new Date();
     const startDate = new Date(now.getFullYear(), now.getMonth(), 1);
     return startDate.toISOString().split('T')[0];
   }
 
-  public getThisMonthEndDate(): string {
+  getThisMonthEndDate(): string {
     const now = new Date();
     const endDate = new Date(now.getFullYear(), now.getMonth() + 1, 0);
     return endDate.toISOString().split('T')[0];
   }
 
-  public getLastMonthStartDate(): string {
+  getLastMonthStartDate(): string {
     const now = new Date();
     const startDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);
     return startDate.toISOString().split('T')[0];
   }
 
-  public getLastMonthEndDate(): string {
+  getLastMonthEndDate(): string {
     const now = new Date();
     const endDate = new Date(now.getFullYear(), now.getMonth(), 0);
     return endDate.toISOString().split('T')[0];
   }
 
-  public getThisYearStartDate(): string {
+  getThisYearStartDate(): string {
     const now = new Date();
     const startDate = new Date(now.getFullYear(), 0, 1);
     return startDate.toISOString().split('T')[0];
   }
 
-  public getThisYearEndDate(): string {
+  getThisYearEndDate(): string {
     const now = new Date();
     const endDate = new Date(now.getFullYear(), 11, 31);
     return endDate.toISOString().split('T')[0];
   }
 
-  public getLastYearStartDate(): string {
+  getLastYearStartDate(): string {
     const now = new Date();
     const startDate = new Date(now.getFullYear() - 1, 0, 1);
     return startDate.toISOString().split('T')[0];
   }
 
-  public getLastYearEndDate(): string {
+  getLastYearEndDate(): string {
     const now = new Date();
     const endDate = new Date(now.getFullYear() - 1, 11, 31);
     return endDate.toISOString().split('T')[0];
+  }
+
+  getCategoryName(categoryId: string) {
+    return this.http.get(`http://localhost:5000/api/category/${categoryId}`);
   }
 }
