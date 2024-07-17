@@ -9,6 +9,6 @@ import { Router } from '@angular/router';
 export class HomeComponent {
   constructor(private router: Router) {}
   navigatetoSignUp() {
-    this.router.navigate(['signup']);
+    this.router.navigate(['auth/signup']);
   }
 }

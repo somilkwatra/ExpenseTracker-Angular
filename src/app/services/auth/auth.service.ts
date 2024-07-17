@@ -36,7 +36,7 @@ export class AuthService {
 
           // sessionStorage.setItem('id', id);
 
-          this.router.navigate(['expense-home']);
+          this.router.navigate(['expense/expense-home']);
           console.log('Opening success dialog...');
           this.dialog.open(SucessDialogComponent);
         },
@@ -51,7 +51,7 @@ export class AuthService {
   reload() {
     if (localStorage.getItem('token')) {
       this.isLoggedIn.next(true);
-      this.router.navigate(['expense-home']);
+      this.router.navigate(['expense/expense-home']);
     }
   }
 
@@ -71,7 +71,7 @@ export class AuthService {
           localStorage.setItem('token', accessToken);
           // sessionStorage.setItem('id', id);
 
-          this.router.navigate(['expense-home']);
+          this.router.navigate(['expense/expense-home']);
           console.log('Opening success dialog...');
           this.dialog.open(SucessDialogComponent);
         },

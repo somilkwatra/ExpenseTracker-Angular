@@ -5,10 +5,7 @@ import { LogExpenseComponent } from './log-expense/log-expense.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterModule } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
+import { RouterModule, Routes } from '@angular/router';
 import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
@@ -19,6 +16,18 @@ import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { ReportsComponent } from './reports/reports.component';
 
+const routes: Routes = [
+  {
+    path: 'expense-home',
+    component: ExpenseHomeComponent,
+  },
+  {
+    path: 'logExpense',
+    component: LogExpenseComponent,
+  },
+  { path: 'report', component: ReportsComponent },
+];
+
 @NgModule({
   declarations: [ExpenseHomeComponent, LogExpenseComponent, ReportsComponent],
   imports: [
@@ -26,9 +35,7 @@ import { ReportsComponent } from './reports/reports.component';
     MatInputModule,
     FormsModule,
     MatButtonModule,
-    BrowserAnimationsModule,
-    NoopAnimationsModule,
-    RouterModule,
+    RouterModule.forChild(routes),
     MatSelectModule,
     ReactiveFormsModule,
     MatIconModule,
@@ -38,6 +45,11 @@ import { ReportsComponent } from './reports/reports.component';
     MatCardModule,
     MatListModule,
   ],
-  exports: [ExpenseHomeComponent, LogExpenseComponent, ReportsComponent],
+  exports: [
+    ExpenseHomeComponent,
+    LogExpenseComponent,
+    ReportsComponent,
+    RouterModule,
+  ],
 })
 export class ExpenseModule {}

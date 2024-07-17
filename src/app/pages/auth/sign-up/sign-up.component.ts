@@ -41,6 +41,6 @@ export class SignUpComponent {
     // );
   }
   navigateToSignin() {
-    this.router.navigate(['signin']);
+    this.router.navigate(['auth/signin']);
   }
 }

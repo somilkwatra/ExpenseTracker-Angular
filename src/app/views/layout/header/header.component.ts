@@ -25,7 +25,7 @@ export class HeaderComponent {
   logout() {
     localStorage.removeItem('token');
     // sessionStorage.removeItem('id');
-    this.router.navigate(['']);
+    this.router.navigate(['Home']);
     this.dialog.open(SucessDialogComponent);
   }
 }

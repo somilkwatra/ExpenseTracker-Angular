@@ -5,10 +5,13 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+
+const routes: Routes = [
+  { path: 'signin', component: SignInComponent },
+  { path: 'signup', component: SignUpComponent },
+];
 
 @NgModule({
   declarations: [SignInComponent, SignUpComponent],
@@ -17,9 +20,7 @@ import { MatDialog } from '@angular/material/dialog';
     MatInputModule,
     MatButtonModule,
     FormsModule,
-    BrowserAnimationsModule,
-    NoopAnimationsModule,
-    RouterModule,
+    RouterModule.forChild(routes),
   ],
   exports: [SignInComponent, SignUpComponent],
 })

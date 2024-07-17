@@ -6,7 +6,9 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MatFormField } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { Routes, RouterModule } from '@angular/router';
 
+const routes: Routes = [{ path: 'account', component: AccountComponent }];
 @NgModule({
   declarations: [AccountComponent],
   imports: [
@@ -16,6 +18,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     FormsModule,
     MatFormField,
     MatSnackBarModule,
+    RouterModule.forChild(routes),
   ],
   exports: [AccountComponent],
 })
