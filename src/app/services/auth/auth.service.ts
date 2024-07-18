@@ -22,20 +22,15 @@ export class AuthService {
   userSignUp(data: user) {
     console.log('Service Called');
     this.http
-      .post<any>(
-        'https://backend-expense-tracker-evzg.onrender.com/api/auth/register',
-        data,
-        {
-          observe: 'response',
-        }
-      )
+      .post<any>('http://localhost:5000/api/auth/register', data, {
+        observe: 'response',
+      })
       .subscribe(
         (res) => {
-          this.isLoggedIn.next(true);
+          this.isLoggedIn.next(true); // if(token then next)
           console.warn(res.body);
 
           const accessToken = res.body.accessToken;
-          const id = res.body.result._id;
           localStorage.setItem('token', accessToken);
 
           // sessionStorage.setItem('id', id);
@@ -62,13 +57,9 @@ export class AuthService {
   login(data: login) {
     console.log('Service Called');
     this.http
-      .post<any>(
-        'https://backend-expense-tracker-evzg.onrender.com/api/auth/login',
-        data,
-        {
-          observe: 'response',
-        }
-      )
+      .post<any>('http://localhost:5000/api/auth/login', data, {
+        observe: 'response',
+      })
       .subscribe(
         (res) => {
           this.isLoggedIn.next(true);
@@ -85,7 +76,6 @@ export class AuthService {
         },
         (error) => {
           console.error('Error:', error);
-          console.log('Opening error dialog...');
           this.dialog.open(ErrorDialogComponent);
         }
       );
@@ -108,31 +98,46 @@ export class AuthService {
   //     }
   //   }
 
-  base64UrlDecode(base64Url: string): string {
-    let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    const padding = base64.length % 4;
-    if (padding === 2) {
-      base64 += '==';
-    } else if (padding === 3) {
-      base64 += '=';
+  base64UrlDecode(base64Url: string) {
+    if (base64Url) {
+      let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const padding = base64.length % 4;
+      if (padding === 2) {
+        base64 += '==';
+      } else if (padding === 3) {
+        base64 += '=';
+      }
+      return decodeURIComponent(
+        atob(base64)
+          .split('')
+          .map((c) => {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+          })
+          .join('')
+      );
+    } else {
+      return null;
     }
-    return decodeURIComponent(
-      atob(base64)
-        .split('')
-        .map((c) => {
-          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        })
-        .join('')
-    );
   }
 
   getUserIdFromToken(token: any): string | null {
+    // token
+    // let token = localStorage.getItem(token')
     const decodedToken = this.decodeJwt(token);
     return decodedToken ? decodedToken.id : null;
   }
   decodeJwt(token: string): any {
     const payload = token.split('.')[1];
     const decodedPayload = this.base64UrlDecode(payload);
-    return JSON.parse(decodedPayload);
+
+    if (decodedPayload) {
+      return JSON.parse(decodedPayload);
+    } else {
+      return null;
+    }
   }
-}
+  delibrateLogout() {
+    localStorage.removeItem('token');
+    this.router.navigate(['auth/signup']);
+  }
+} /// use in every component

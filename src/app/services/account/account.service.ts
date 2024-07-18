@@ -13,9 +13,6 @@ export class AccountService {
     // const id = sessionStorage.getItem('id');
     const token = localStorage.getItem('token');
     const id = this.authService.getUserIdFromToken(token);
-    return this.http.put(
-      `https://backend-expense-tracker-evzg.onrender.com/api/users/${id}`,
-      data
-    );
+    return this.http.put(`http://localhost:5000/api/users/${id}`, data);
   }
 }

@@ -49,8 +49,55 @@
     >
       Last year
     </button>
+    <button
+      mat-raised-button
+      color="primary"
+      class="mx-1"
+      (click)="applyDateRangeByType('thisQuarter')"
+    >
+      This Quarter
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      class="mx-1"
+      (click)="applyDateRangeByType('lastQuarter')"
+    >
+      Last Quarter
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      class="mx-1"
+      (click)="applyDateRangeByType('firstQuarter')"
+    >
+      1st Quarter of Last Year
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      class="mx-1"
+      (click)="applyDateRangeByType('secondQuarter')"
+    >
+      2nd Quarter of Last Year
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      class="mx-1"
+      (click)="applyDateRangeByType('thirdQuarter')"
+    >
+      3rd Quarter of Last Year
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      class="mx-1"
+      (click)="applyDateRangeByType('fourthQuarter')"
+    >
+      4th Quarter of Last Year
+    </button>
   </div>
-
   <!-- Custom date picker -->
   <div class="custom-date-picker mb-4 text-center">
     <mat-form-field appearance="fill" class="mx-2">

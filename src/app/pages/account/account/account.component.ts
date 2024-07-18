@@ -35,7 +35,7 @@ export class AccountComponent {
 
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
-      duration: 5000, // 5 seconds
+      duration: 5000,
     });
   }
 }

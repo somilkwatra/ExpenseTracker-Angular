@@ -4,20 +4,9 @@ import { ExpenseService } from '../../../services/expenses/expense.service';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { DatePipe } from '@angular/common';
 import { AuthService } from '../../../services/auth/auth.service';
-import { Dialog } from '@angular/cdk/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { UpdateDialogComponent } from '../../../shared/update-dialog/update-dialog.component';
 import { Expense } from '../../../shared/model';
-
-// interface Expense {
-//   _id: string;
-//   sno: number;
-//   date: string;
-//   name: string;
-//   amount: number;
-//   category: {
-//     name: string;
-//   };
-// }
 
 @Component({
   selector: 'app-expense-home',
@@ -46,23 +35,27 @@ export class ExpenseHomeComponent implements OnInit {
   constructor(
     private expenseService: ExpenseService,
     private authService: AuthService,
-    private dialog: Dialog
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
     const token = localStorage.getItem('token');
     this.userId = this.authService.getUserIdFromToken(token) || '';
+    console.log(this.userId);
+    if (!this.userId) {
+      this.authService.delibrateLogout();
+    }
   }
 
   getExpenses() {
+    console.log(this.startdate, this.enddate);
     if (this.startdate && this.enddate) {
       this.expenseService
         .getUserExpenses(this.userId, this.startdate, this.enddate)
         .subscribe((expenses: any[]) => {
           console.log(expenses);
-          // Map through expenses to populate category name
           expenses.forEach((expense) => {
-            expense.category = { name: expense.category }; // Assigning category as an object with 'name' property
+            expense.category = { name: expense.category };
           });
           this.dataSource.data = expenses;
           this.calculateTotalAmount();
@@ -101,38 +94,59 @@ export class ExpenseHomeComponent implements OnInit {
       case 'thisWeek':
         start = new Date(
           now.setDate(
-            now.getDate() - (now.getDay() === 0 ? 6 : now.getDay() - 1)
+            now.getDate() - now.getDay() + (now.getDay() === 0 ? -6 : 1)
           )
         );
-        end = new Date(now.setDate(now.getDate() + 6));
-
+        end = new Date();
         break;
       case 'lastWeek':
-        const lastWeekStart = new Date(
-          now.setDate(now.getDate() - now.getDay() - 7)
-        );
-        start = new Date(lastWeekStart.setDate(lastWeekStart.getDate()));
-        end = new Date(lastWeekStart.setDate(lastWeekStart.getDate() + 6));
+        start = new Date(now.setDate(now.getDate() - now.getDay() - 6));
+        end = new Date(start);
+        end.setDate(start.getDate() + 6);
         break;
       case 'thisMonth':
         start = new Date(now.getFullYear(), now.getMonth(), 1);
-        end = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+        end = new Date();
         break;
       case 'lastMonth':
-        const lastMonthStart = new Date(
-          now.getFullYear(),
-          now.getMonth() - 1,
-          1
-        );
-        start = lastMonthStart;
+        start = new Date(now.getFullYear(), now.getMonth() - 1, 1);
         end = new Date(now.getFullYear(), now.getMonth(), 0);
         break;
       case 'thisYear':
         start = new Date(now.getFullYear(), 0, 1);
-        end = new Date(now.getFullYear(), 11, 31);
+        end = new Date();
         break;
       case 'lastYear':
         start = new Date(now.getFullYear() - 1, 0, 1);
+        end = new Date(now.getFullYear() - 1, 11, 31);
+        break;
+      case 'thisQuarter':
+        start = new Date(
+          now.getFullYear(),
+          Math.floor(now.getMonth() / 3) * 3,
+          1
+        );
+        end = new Date();
+        break;
+      case 'lastQuarter':
+        const lastQuarterStartMonth = Math.floor((now.getMonth() - 3) / 3) * 3;
+        start = new Date(now.getFullYear(), lastQuarterStartMonth, 1);
+        end = new Date(now.getFullYear(), lastQuarterStartMonth + 3, 0);
+        break;
+      case 'firstQuarter':
+        start = new Date(now.getFullYear() - 1, 0, 1);
+        end = new Date(now.getFullYear() - 1, 2, 31);
+        break;
+      case 'secondQuarter':
+        start = new Date(now.getFullYear() - 1, 3, 1);
+        end = new Date(now.getFullYear() - 1, 5, 30);
+        break;
+      case 'thirdQuarter':
+        start = new Date(now.getFullYear() - 1, 6, 1);
+        end = new Date(now.getFullYear() - 1, 8, 30);
+        break;
+      case 'fourthQuarter':
+        start = new Date(now.getFullYear() - 1, 9, 1);
         end = new Date(now.getFullYear() - 1, 11, 31);
         break;
       default:
@@ -147,12 +161,11 @@ export class ExpenseHomeComponent implements OnInit {
   deleteExpense(id: string) {
     this.expenseService.deleteExpense(id).subscribe(
       () => {
-        // Remove the deleted expense from the dataSource
         this.dataSource.data = this.dataSource.data.filter(
           (expense) => expense._id !== id
         );
         console.log('Expense deleted successfully');
-        this.calculateTotalAmount(); // Recalculate total amount after deletion
+        this.calculateTotalAmount();
       },
       (error) => {
         console.error('Error deleting expense:', error);

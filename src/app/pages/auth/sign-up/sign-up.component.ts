@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../../services/auth/auth.service';
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
-import { SucessDialogComponent } from '../../../shared/sucess-dialog/sucess-dialog.component';
-import { ErrorDialogComponent } from '../../../shared/error-dialog/error-dialog.component';
 import { user } from '../../../shared/model';
 
 @Component({
@@ -12,11 +9,7 @@ import { user } from '../../../shared/model';
   styleUrls: ['./sign-up.component.scss'],
 })
 export class SignUpComponent {
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-    private dialog: MatDialog
-  ) {}
+  constructor(private authService: AuthService, private router: Router) {}
   ngOnInit() {
     this.authService.reload();
   }

@@ -4,7 +4,7 @@ import { authGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
   {
-    path: 'expense',
+    path: 'expense', // path ke bad
     loadChildren: () =>
       import('./pages/expense/expense.module').then((mod) => mod.ExpenseModule),
     canActivate: [authGuard],

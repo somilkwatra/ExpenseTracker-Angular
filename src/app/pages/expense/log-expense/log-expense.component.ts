@@ -1,13 +1,19 @@
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { AuthService } from './../../../services/auth/auth.service';
-import { category } from './../../../shared/model';
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 import { CategoryDialogComponent } from '../../../shared/category-dialog/category-dialog.component';
+import { ExpenseDialogComponent } from '../../../shared/expense-dialog/expense-dialog.component';
+import { AuthService } from './../../../services/auth/auth.service';
 import { CategoryService } from '../../../services/category/category.service';
 import { ExpenseService } from '../../../services/expenses/expense.service';
-import { ExpenseDialogComponent } from '../../../shared/expense-dialog/expense-dialog.component';
+import { category } from './../../../shared/model';
 
 @Component({
   selector: 'app-log-expense',
@@ -17,10 +23,11 @@ import { ExpenseDialogComponent } from '../../../shared/expense-dialog/expense-d
 export class LogExpenseComponent implements OnInit {
   date = new FormControl(new Date());
   categories: category[] = [];
-  Categories = new FormControl('');
+  expenseForm!: FormGroup; // Declare expenseForm as a FormGroup
 
   constructor(
     public dialog: MatDialog,
+    private formBuilder: FormBuilder, // Inject FormBuilder
     private categoryService: CategoryService,
     private expenseService: ExpenseService,
     private authService: AuthService,
@@ -28,7 +35,18 @@ export class LogExpenseComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.initExpenseForm(); // Initialize the form
     this.getCategoriesById();
+  }
+
+  initExpenseForm() {
+    this.expenseForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      amount: ['', Validators.required],
+      category: ['', Validators.required],
+      notes: ['', Validators.required],
+      date: [new Date(), Validators.required],
+    });
   }
 
   showDialog() {
@@ -45,32 +63,33 @@ export class LogExpenseComponent implements OnInit {
     });
   }
 
-  addExpenses(data: any) {
-    // const userId = sessionStorage.getItem('id');
-    const token = localStorage.getItem('token');
+  addExpenses() {
+    if (this.expenseForm.valid) {
+      const token = localStorage.getItem('token');
+      const userId = this.authService.getUserIdFromToken(token);
 
-    const userId = this.authService.getUserIdFromToken(token);
-    if (!userId) {
-      console.error('User ID not found in local storage');
-      return;
-    }
-
-    const expenseData = {
-      name: data.name,
-      categoryId: data.category._id,
-      amount: data.amount,
-      userId: userId,
-      notes: data.notes,
-      date: data.date || new Date().toISOString(),
-    };
-
-    console.log(expenseData);
-    this.expenseService.addExpense(expenseData).subscribe((res) => {
-      if (res) {
-        console.log('Data Sent Successfully');
-        this.dialog.open(ExpenseDialogComponent);
+      if (!userId) {
+        console.error('User ID not found');
+        return;
       }
-    });
+
+      const expenseData = {
+        name: this.expenseForm.value.name,
+        categoryId: this.expenseForm.value.category._id,
+        amount: this.expenseForm.value.amount,
+        userId: userId,
+        notes: this.expenseForm.value.notes,
+        date: this.expenseForm.value.date.toISOString(),
+      };
+
+      console.log(expenseData);
+      this.expenseService.addExpense(expenseData).subscribe((res) => {
+        if (res) {
+          console.log('Data Sent Successfully');
+          this.dialog.open(ExpenseDialogComponent);
+        }
+      });
+    }
   }
 
   deleteCategory(id: string) {

@@ -11,10 +11,7 @@ export class ExpenseService {
   constructor(private http: HttpClient) {}
 
   addExpense(data: any) {
-    return this.http.post(
-      'https://backend-expense-tracker-evzg.onrender.com/api/expenses',
-      data
-    );
+    return this.http.post('http://localhost:5000/api/expenses', data);
   }
 
   getUserExpenses(
@@ -26,12 +23,9 @@ export class ExpenseService {
       .set('startDate', startDate)
       .set('endDate', endDate);
 
-    return this.http.get<any>(
-      `https://backend-expense-tracker-evzg.onrender.com/api/expenses/${userId}`,
-      {
-        params,
-      }
-    );
+    return this.http.get<any>(`http://localhost:5000/api/expenses/${userId}`, {
+      params,
+    });
   }
 
   // Calculate total expenses for a period
@@ -42,15 +36,14 @@ export class ExpenseService {
   // Calculate percentage change
   public calculatePercentageChange(oldValue: number, newValue: number): number {
     if (oldValue === 0 && newValue === 0) {
-      return 0; // Both old and new values are zero
+      return 0;
     } else if (oldValue === 0) {
-      return 100; // Old value is zero, percentage change is 100%
+      return 100;
     } else {
       return ((newValue - oldValue) / Math.abs(oldValue)) * 100;
     }
   }
 
-  // Get percentage change for week
   getWeeklyExpenseChange(userId: string): Observable<number> {
     const thisWeekStartDate = this.getThisWeekStartDate();
     const thisWeekEndDate = this.getThisWeekEndDate();
@@ -79,7 +72,6 @@ export class ExpenseService {
     );
   }
 
-  // Get percentage change for month
   getMonthlyExpenseChange(userId: string): Observable<number> {
     const thisMonthStartDate = this.getThisMonthStartDate();
     const thisMonthEndDate = this.getThisMonthEndDate();
@@ -108,7 +100,6 @@ export class ExpenseService {
     );
   }
 
-  // Get percentage change for year
   getYearlyExpenseChange(userId: string): Observable<number> {
     const thisYearStartDate = this.getThisYearStartDate();
     const thisYearEndDate = this.getThisYearEndDate();
@@ -137,7 +128,6 @@ export class ExpenseService {
     );
   }
 
-  // Helper functions to get date ranges
   getThisWeekStartDate(): string {
     const now = new Date();
     const day = now.getDay();
@@ -218,19 +208,12 @@ export class ExpenseService {
     return endDate.toISOString().split('T')[0];
   }
   deleteExpense(id: string) {
-    return this.http.delete(
-      `https://backend-expense-tracker-evzg.onrender.com/api/expenses/${id}`
-    );
+    return this.http.delete(`http://localhost:5000/api/expenses/${id}`);
   }
   getExpense(id: string): Observable<Expense> {
-    return this.http.get<Expense>(
-      `https://backend-expense-tracker-evzg.onrender.com/api/expenses/${id}`
-    );
+    return this.http.get<Expense>(`http://localhost:5000/api/expenses/${id}`);
   }
   updateExpense(id: string, data: any): Observable<any> {
-    return this.http.put(
-      `https://backend-expense-tracker-evzg.onrender.com/api/expenses/${id}`,
-      data
-    );
+    return this.http.put(`http://localhost:5000/api/expenses/${id}`, data);
   }
 }
