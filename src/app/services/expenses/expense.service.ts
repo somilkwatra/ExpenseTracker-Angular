@@ -11,7 +11,10 @@ export class ExpenseService {
   constructor(private http: HttpClient) {}
 
   addExpense(data: any) {
-    return this.http.post('http://localhost:5000/api/expenses', data);
+    return this.http.post(
+      'https://backend-expense-tracker-evzg.onrender.com/api/expenses',
+      data
+    );
   }
 
   getUserExpenses(
@@ -23,9 +26,12 @@ export class ExpenseService {
       .set('startDate', startDate)
       .set('endDate', endDate);
 
-    return this.http.get<any>(`http://localhost:5000/api/expenses/${userId}`, {
-      params,
-    });
+    return this.http.get<any>(
+      `https://backend-expense-tracker-evzg.onrender.com/api/expenses/${userId}`,
+      {
+        params,
+      }
+    );
   }
 
   // Calculate total expenses for a period
@@ -212,12 +218,19 @@ export class ExpenseService {
     return endDate.toISOString().split('T')[0];
   }
   deleteExpense(id: string) {
-    return this.http.delete(`http://localhost:5000/api/expenses/${id}`);
+    return this.http.delete(
+      `https://backend-expense-tracker-evzg.onrender.com/api/expenses/${id}`
+    );
   }
   getExpense(id: string): Observable<Expense> {
-    return this.http.get<Expense>(`http://localhost:5000/api/expenses/${id}`);
+    return this.http.get<Expense>(
+      `https://backend-expense-tracker-evzg.onrender.com/api/expenses/${id}`
+    );
   }
   updateExpense(id: string, data: any): Observable<any> {
-    return this.http.put(`http://localhost:5000/api/expenses/${id}`, data);
+    return this.http.put(
+      `https://backend-expense-tracker-evzg.onrender.com/api/expenses/${id}`,
+      data
+    );
   }
 }

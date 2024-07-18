@@ -12,7 +12,10 @@ export class CategoryService {
   constructor(private http: HttpClient, private authService: AuthService) {}
 
   addCategory(data: any) {
-    return this.http.post('http://localhost:5000/api/category', data);
+    return this.http.post(
+      'https://backend-expense-tracker-evzg.onrender.com/api/category',
+      data
+    );
   }
 
   getCategoryByUserId(category?: any): Observable<category[]> {
@@ -20,22 +23,24 @@ export class CategoryService {
     const token = localStorage.getItem('token');
     const userId = this.authService.getUserIdFromToken(token);
     return this.http.get<category[]>(
-      `http://localhost:5000/api/category/${userId}`
+      `https://backend-expense-tracker-evzg.onrender.com/api/category/${userId}`
     );
   }
   deleteCategory(id: string) {
-    return this.http.delete(`http://localhost:5000/api/category/${id}`);
+    return this.http.delete(
+      `https://backend-expense-tracker-evzg.onrender.com/api/category/${id}`
+    );
   }
 
   mostUsedCategory(userId: string): Observable<CategoryUsage> {
     return this.http.get<CategoryUsage>(
-      `http://localhost:5000/api/category/most-used/${userId}`
+      `https://backend-expense-tracker-evzg.onrender.com/api/category/most-used/${userId}`
     );
   }
 
   leastUsedCategory(userId: string): Observable<CategoryUsage> {
     return this.http.get<CategoryUsage>(
-      `http://localhost:5000/api/category/least-used/${userId}`
+      `https://backend-expense-tracker-evzg.onrender.com/api/category/least-used/${userId}`
     );
   }
 }
