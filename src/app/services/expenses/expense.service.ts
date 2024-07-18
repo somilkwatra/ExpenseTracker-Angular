@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Expense } from '../../shared/model';
 
 @Injectable({
   providedIn: 'root',
@@ -212,5 +213,11 @@ export class ExpenseService {
   }
   deleteExpense(id: string) {
     return this.http.delete(`http://localhost:5000/api/expenses/${id}`);
+  }
+  getExpense(id: string): Observable<Expense> {
+    return this.http.get<Expense>(`http://localhost:5000/api/expenses/${id}`);
+  }
+  updateExpense(id: string, data: any): Observable<any> {
+    return this.http.put(`http://localhost:5000/api/expenses/${id}`, data);
   }
 }

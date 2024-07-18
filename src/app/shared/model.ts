@@ -30,4 +30,5 @@ export interface Expense {
   category: {
     name: string;
   };
+  notes: string;
 }
