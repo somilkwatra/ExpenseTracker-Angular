@@ -14,7 +14,7 @@ export class SignInComponent {
   }
 
   navigateToSignup() {
-    this.router.navigate(['auth/signup']);
+    this.router.navigate(['sign-up/signup']);
   }
   SignIn(data: any) {
     this.authService.login(data);

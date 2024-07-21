@@ -42,7 +42,7 @@ export class LogExpenseComponent implements OnInit {
   initExpenseForm() {
     this.expenseForm = this.formBuilder.group({
       name: ['', Validators.required],
-      amount: ['', Validators.required],
+      amount: [0, Validators.required],
       category: ['', Validators.required],
       notes: ['', Validators.required],
       date: [new Date(), Validators.required],

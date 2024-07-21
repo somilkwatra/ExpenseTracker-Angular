@@ -5,10 +5,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LayoutModule } from './views/layout/layout.module';
-import { AuthModule } from './pages/auth/auth.module';
 import { HomeModule } from './pages/home/home.module';
 import { HttpClientModule } from '@angular/common/http';
-import { ExpenseModule } from './pages/expense/expense.module';
 import { SucessDialogComponent } from './shared/sucess-dialog/sucess-dialog.component';
 import { ErrorDialogComponent } from './shared/error-dialog/error-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -25,6 +23,8 @@ import { ExpenseDialogComponent } from './shared/expense-dialog/expense-dialog.c
 import { UpdateDialogComponent } from './shared/update-dialog/update-dialog.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
+import { SignInModule } from './pages/auth/sign-in/sign-in.module';
+import { ReportsModule } from './pages/expense/reports/reports.module';
 
 @NgModule({
   declarations: [
@@ -39,10 +39,8 @@ import { MatIconModule } from '@angular/material/icon';
     BrowserModule,
     AppRoutingModule,
     LayoutModule,
-    AuthModule,
     HomeModule,
     HttpClientModule,
-    ExpenseModule,
     MatDialogModule,
     MatButtonModule,
     MatInputModule,
@@ -55,6 +53,8 @@ import { MatIconModule } from '@angular/material/icon';
     NoopAnimationsModule,
     MatSelectModule,
     MatIconModule,
+    SignInModule,
+    ReportsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

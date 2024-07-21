@@ -17,6 +17,7 @@ import { Expense } from '../../../shared/model';
 export class ExpenseHomeComponent implements OnInit {
   startPicker: MatDatepicker<Date> | undefined;
   endPicker: MatDatepicker<Date> | undefined;
+  totalAmount = 0;
 
   displayedColumns: string[] = [
     'sno',
@@ -70,15 +71,15 @@ export class ExpenseHomeComponent implements OnInit {
     this.dataSource.data.forEach((expense) => {
       total += expense.amount;
     });
-    document.getElementById('total-amount')!.textContent = total.toString();
+    this.totalAmount = total;
   }
 
   onStartDateChange(event: any) {
-    this.startdate = event.value.toISOString().split('T')[0];
+    this.startdate = this.setTimeToIST(event.value).toISOString().split('T')[0];
   }
 
   onEndDateChange(event: any) {
-    this.enddate = event.value.toISOString().split('T')[0];
+    this.enddate = this.setTimeToIST(event.value).toISOString().split('T')[0];
   }
 
   applyDateRange() {
@@ -100,9 +101,9 @@ export class ExpenseHomeComponent implements OnInit {
         end = new Date();
         break;
       case 'lastWeek':
-        start = new Date(now.setDate(now.getDate() - now.getDay() - 6));
-        end = new Date(start);
-        end.setDate(start.getDate() + 6);
+        const lastSunday = new Date(now.setDate(now.getDate() - now.getDay()));
+        start = new Date(lastSunday.setDate(lastSunday.getDate() - 6));
+        end = new Date(lastSunday.setDate(lastSunday.getDate() + 6));
         break;
       case 'thisMonth':
         start = new Date(now.getFullYear(), now.getMonth(), 1);
@@ -153,9 +154,17 @@ export class ExpenseHomeComponent implements OnInit {
         return;
     }
 
-    this.startdate = start.toISOString().split('T')[0];
-    this.enddate = end.toISOString().split('T')[0];
+    this.startdate = this.setTimeToIST(start).toISOString().split('T')[0];
+    this.enddate = this.setTimeToIST(end).toISOString().split('T')[0];
     this.getExpenses();
+  }
+
+  setTimeToIST(date: Date): Date {
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    date.setHours(hours + 5);
+    date.setMinutes(minutes + 30);
+    return date;
   }
 
   deleteExpense(id: string) {
@@ -164,16 +173,18 @@ export class ExpenseHomeComponent implements OnInit {
         this.dataSource.data = this.dataSource.data.filter(
           (expense) => expense._id !== id
         );
-        console.log('Expense deleted successfully');
-        this.calculateTotalAmount();
       },
       (error) => {
         console.error('Error deleting expense:', error);
+      },
+      () => {
+        console.log('Expense deleted successfully');
+        this.calculateTotalAmount();
       }
     );
   }
 
-  UpdateButton() {
+  updateButton() {
     this.dialog.open(UpdateDialogComponent);
   }
 }
