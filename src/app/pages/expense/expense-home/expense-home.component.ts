@@ -5,7 +5,6 @@ import { MatDatepicker } from '@angular/material/datepicker';
 import { DatePipe } from '@angular/common';
 import { AuthService } from '../../../services/auth/auth.service';
 import { MatDialog } from '@angular/material/dialog';
-import { UpdateDialogComponent } from '../../../shared/update-dialog/update-dialog.component';
 import { Expense } from '../../../shared/model';
 
 @Component({
@@ -49,18 +48,23 @@ export class ExpenseHomeComponent implements OnInit {
   }
 
   getExpenses() {
-    console.log(this.startdate, this.enddate);
+    console.log('Fetching expenses from:', this.startdate, 'to:', this.enddate);
     if (this.startdate && this.enddate) {
       this.expenseService
         .getUserExpenses(this.userId, this.startdate, this.enddate)
-        .subscribe((expenses: any[]) => {
-          console.log(expenses);
-          expenses.forEach((expense) => {
-            expense.category = { name: expense.category };
-          });
-          this.dataSource.data = expenses;
-          this.calculateTotalAmount();
-        });
+        .subscribe(
+          (expenses: any[]) => {
+            console.log('Expenses received:', expenses);
+            expenses.forEach((expense) => {
+              expense.category = { name: expense.category };
+            });
+            this.dataSource.data = expenses;
+            this.calculateTotalAmount();
+          },
+          (error) => {
+            console.error('Error fetching expenses:', error);
+          }
+        );
     } else {
       console.warn('Please select start and end dates.');
     }
@@ -182,9 +186,5 @@ export class ExpenseHomeComponent implements OnInit {
         this.calculateTotalAmount();
       }
     );
-  }
-
-  updateButton() {
-    this.dialog.open(UpdateDialogComponent);
   }
 }
