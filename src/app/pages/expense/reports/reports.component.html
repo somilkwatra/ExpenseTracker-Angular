@@ -1,18 +1,24 @@
-<div class="expense-reports">
-  <h1>Expense Reports</h1>
-
+<div class="reports-container">
   <div class="change-section">
     <div class="change-item">
       <p>Weekly Change:</p>
       <span
         [ngClass]="{
-          'red-text': weeklyChange !== null && weeklyChange < 0,
+          'ed-text': weeklyChange !== null && weeklyChange < 0,
           'green-text': weeklyChange !== null && weeklyChange >= 0
         }"
         class="change-value"
       >
         {{
-          weeklyChange !== null ? weeklyChange.toFixed(2) + "%" : "Loading..."
+          weeklyChange !== null
+            ? "(" +
+              weeklyOldValue +
+              " → " +
+              weeklyNewValue +
+              ") " +
+              weeklyChange.toFixed(2) +
+              "%"
+            : "Loading..."
         }}
       </span>
     </div>
@@ -20,13 +26,21 @@
       <p>Monthly Change:</p>
       <span
         [ngClass]="{
-          'red-text': monthlyChange !== null && monthlyChange < 0,
+          'ed-text': monthlyChange !== null && monthlyChange < 0,
           'green-text': monthlyChange !== null && monthlyChange >= 0
         }"
         class="change-value"
       >
         {{
-          monthlyChange !== null ? monthlyChange.toFixed(2) + "%" : "Loading..."
+          monthlyChange !== null
+            ? "(" +
+              monthlyOldValue +
+              " → " +
+              monthlyNewValue +
+              ") " +
+              monthlyChange.toFixed(2) +
+              "%"
+            : "Loading..."
         }}
       </span>
     </div>
@@ -34,37 +48,45 @@
       <p>Yearly Change:</p>
       <span
         [ngClass]="{
-          'red-text': yearlyChange !== null && yearlyChange < 0,
+          'ed-text': yearlyChange !== null && yearlyChange < 0,
           'green-text': yearlyChange !== null && yearlyChange >= 0
         }"
         class="change-value"
       >
         {{
-          yearlyChange !== null ? yearlyChange.toFixed(2) + "%" : "Loading..."
+          yearlyChange !== null
+            ? "(" +
+              yearlyOldValue +
+              " → " +
+              yearlyNewValue +
+              ") " +
+              yearlyChange.toFixed(2) +
+              "%"
+            : "Loading..."
         }}
       </span>
     </div>
   </div>
+</div>
 
-  <div *ngIf="mostUsedCategory || leastUsedCategory" class="category-section">
-    <div *ngIf="mostUsedCategory" class="category-item">
-      <p class="category-title">Most Used Category:</p>
-      <p class="category-name">{{ mostUsedCategory.name }}</p>
-      <p class="category-count">Usage Count: {{ mostUsedCategory.count }}</p>
-      Total Amount:${{ mostUsedCategory.totalAmount }}
-      <p class="category-percentage">
-        Percentage: {{ mostUsedCategory.percentage }}
-      </p>
-    </div>
+<div *ngIf="mostUsedCategory || leastUsedCategory" class="category-section">
+  <div *ngIf="mostUsedCategory" class="category-item">
+    <p class="category-title">Most Used Category:</p>
+    <p class="category-name">{{ mostUsedCategory.name }}</p>
+    <p class="category-count">Usage Count: {{ mostUsedCategory.count }}</p>
+    Total Amount:${{ mostUsedCategory.totalAmount }}
+    <p class="category-percentage">
+      Percentage: {{ mostUsedCategory.percentage }}
+    </p>
+  </div>
 
-    <div *ngIf="leastUsedCategory" class="category-item">
-      <p class="category-title">Least Used Category:</p>
-      <p class="category-name">{{ leastUsedCategory.name }}</p>
-      <p class="category-count">Usage Count: {{ leastUsedCategory.count }}</p>
-      Total Amount:${{ leastUsedCategory.totalAmount }}
-      <p class="category-percentage">
-        Percentage: {{ leastUsedCategory.percentage }}
-      </p>
-    </div>
+  <div *ngIf="leastUsedCategory" class="category-item">
+    <p class="category-title">Least Used Category:</p>
+    <p class="category-name">{{ leastUsedCategory.name }}</p>
+    <p class="category-count">Usage Count: {{ leastUsedCategory.count }}</p>
+    Total Amount:${{ leastUsedCategory.totalAmount }}
+    <p class="category-percentage">
+      Percentage: {{ leastUsedCategory.percentage }}
+    </p>
   </div>
 </div>

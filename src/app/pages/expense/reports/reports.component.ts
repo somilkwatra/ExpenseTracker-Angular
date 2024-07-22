@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../services/auth/auth.service';
 import { ExpenseService } from './../../../services/expenses/expense.service';
 import { CategoryService } from './../../../services/category/category.service';
-import { CategoryUsage } from './../../../shared/model'; // Ensure CategoryUsage is imported
+import { CategoryUsage } from './../../../shared/model';
 
 @Component({
   selector: 'app-reports',
@@ -10,8 +10,14 @@ import { CategoryUsage } from './../../../shared/model'; // Ensure CategoryUsage
   styleUrls: ['./reports.component.scss'],
 })
 export class ReportsComponent implements OnInit {
+  weeklyOldValue: number | null = null;
+  weeklyNewValue: number | null = null;
   weeklyChange: number | null = null;
+  monthlyOldValue: number | null = null;
+  monthlyNewValue: number | null = null;
   monthlyChange: number | null = null;
+  yearlyOldValue: number | null = null;
+  yearlyNewValue: number | null = null;
   yearlyChange: number | null = null;
   mostUsedCategory: CategoryUsage | undefined;
   leastUsedCategory: CategoryUsage | undefined;
@@ -27,10 +33,11 @@ export class ReportsComponent implements OnInit {
     const userId = this.authService.getUserIdFromToken(token);
 
     if (userId) {
-      // Fetching weekly, monthly, and yearly changes
       this.expenseService.getWeeklyExpenseChange(userId).subscribe(
         (change) => {
-          this.weeklyChange = change;
+          this.weeklyOldValue = change.oldValue;
+          this.weeklyNewValue = change.newValue;
+          this.weeklyChange = change.percentageChange;
           console.log('Weekly Change:', change);
         },
         (error) => {
@@ -40,7 +47,9 @@ export class ReportsComponent implements OnInit {
 
       this.expenseService.getMonthlyExpenseChange(userId).subscribe(
         (change) => {
-          this.monthlyChange = change;
+          this.monthlyOldValue = change.oldValue;
+          this.monthlyNewValue = change.newValue;
+          this.monthlyChange = change.percentageChange;
           console.log('Monthly Change:', change);
         },
         (error) => {
@@ -50,7 +59,9 @@ export class ReportsComponent implements OnInit {
 
       this.expenseService.getYearlyExpenseChange(userId).subscribe(
         (change) => {
-          this.yearlyChange = change;
+          this.yearlyOldValue = change.oldValue;
+          this.yearlyNewValue = change.newValue;
+          this.yearlyChange = change.percentageChange;
           console.log('Yearly Change:', change);
         },
         (error) => {
@@ -58,7 +69,6 @@ export class ReportsComponent implements OnInit {
         }
       );
 
-      // Fetching most used category
       this.categoryService.mostUsedCategory(userId).subscribe(
         (categoryUsage) => {
           this.mostUsedCategory = categoryUsage;
@@ -69,7 +79,6 @@ export class ReportsComponent implements OnInit {
         }
       );
 
-      // Fetching least used category
       this.categoryService.leastUsedCategory(userId).subscribe(
         (categoryUsage) => {
           this.leastUsedCategory = categoryUsage;
