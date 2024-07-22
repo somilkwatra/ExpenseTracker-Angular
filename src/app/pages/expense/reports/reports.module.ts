@@ -13,7 +13,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { ReportsComponent } from './reports.component';
 
-const routes: Routes = [{ path: '', component: ReportsComponent }];
+const routes: Routes = [{ path: 'report', component: ReportsComponent }];
 
 @NgModule({
   declarations: [ReportsComponent],
@@ -32,5 +32,6 @@ const routes: Routes = [{ path: '', component: ReportsComponent }];
     MatCardModule,
     MatListModule,
   ],
+  exports: [ReportsComponent],
 })
 export class ReportsModule {}

@@ -20,6 +20,7 @@ export interface CategoryUsage {
   name: string;
   percentage: number;
   count: number;
+  totalAmount: number;
 }
 export interface Expense {
   _id: string;
@@ -31,4 +32,10 @@ export interface Expense {
     name: string;
   };
   notes: string;
+}
+
+export interface ExpenseChange {
+  change: number;
+  currentTotal: number;
+  previousTotal: number;
 }

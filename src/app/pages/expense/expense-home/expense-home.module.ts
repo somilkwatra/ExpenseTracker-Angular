@@ -37,5 +37,6 @@ const routes: Routes = [
     MatCardModule,
     MatListModule,
   ],
+  exports: [ExpenseHomeComponent],
 })
 export class ExpenseHomeModule {}

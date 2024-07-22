@@ -1,33 +1,38 @@
 .expense-reports {
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
   padding: 20px;
-  background-color: #f7f7f7;
+  background-color: #ffffff;
   border: 1px solid #e0e0e0;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .expense-reports h1 {
-  font-size: 28px;
-  margin-bottom: 24px;
-  color: #222;
+  font-size: 30px;
+  margin-bottom: 20px;
+  color: #333;
   text-align: center;
-  border-bottom: 2px solid #e0e0e0;
-  padding-bottom: 10px;
+  border-bottom: 3px solid #e0e0e0;
+  padding-bottom: 12px;
 }
 
 .change-section {
-  margin-bottom: 24px;
+  margin-bottom: 30px;
 }
 
 .change-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 20px;
-  padding: 12px 0;
+  font-size: 18px;
+  padding: 15px 10px;
   border-bottom: 1px solid #e0e0e0;
+  transition: background-color 0.3s;
+}
+
+.change-item:hover {
+  background-color: #f9f9f9;
 }
 
 .change-item p {
@@ -35,8 +40,8 @@
 }
 
 .change-value {
-  font-size: 22px;
-  font-weight: bold;
+  font-size: 24px;
+  font-weight: 600;
 }
 
 .green-text {
@@ -54,26 +59,27 @@
 }
 
 .category-item {
-  margin-bottom: 24px;
-  padding: 16px;
-  background-color: #fff;
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .category-title {
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: #333;
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #444;
 }
 
 .category-name,
 .category-count,
 .category-percentage {
-  font-size: 18px;
-  margin-bottom: 8px;
-  color: #555;
+  font-size: 16px;
+  margin-bottom: 6px;
+  color: #666;
 }
 
 @media (max-width: 600px) {
@@ -82,7 +88,8 @@
   }
 
   .change-item {
-    font-size: 18px;
+    font-size: 16px;
+    padding: 12px 8px;
   }
 
   .change-value {
@@ -90,7 +97,7 @@
   }
 
   .category-item {
-    font-size: 16px;
+    font-size: 14px;
   }
 
   .category-title {
@@ -100,6 +107,6 @@
   .category-name,
   .category-count,
   .category-percentage {
-    font-size: 16px;
+    font-size: 14px;
   }
 }

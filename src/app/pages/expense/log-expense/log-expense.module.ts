@@ -38,5 +38,6 @@ const routes: Routes = [
     MatCardModule,
     MatListModule,
   ],
+  exports: [LogExpenseComponent],
 })
 export class LogExpenseModule {}
