@@ -7,10 +7,23 @@ import { BaseComponent } from './base/base.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
+import { SpinnerComponent } from '../../shared/spinner/spinner.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
-  declarations: [HeaderComponent, FooterComponent, BaseComponent],
-  imports: [CommonModule, MatToolbarModule, MatButtonModule, RouterModule],
+  declarations: [
+    HeaderComponent,
+    FooterComponent,
+    BaseComponent,
+    SpinnerComponent,
+  ],
+  imports: [
+    CommonModule,
+    MatToolbarModule,
+    MatButtonModule,
+    RouterModule,
+    MatProgressSpinnerModule,
+  ],
   exports: [HeaderComponent, FooterComponent, BaseComponent],
 })
 export class LayoutModule {}

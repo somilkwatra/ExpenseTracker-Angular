@@ -25,6 +25,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { SignInModule } from './pages/auth/sign-in/sign-in.module';
 import { ReportsModule } from './pages/expense/reports/reports.module';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { ReportsModule } from './pages/expense/reports/reports.module';
     MatIconModule,
     SignInModule,
     ReportsModule,
+    MatProgressSpinnerModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
