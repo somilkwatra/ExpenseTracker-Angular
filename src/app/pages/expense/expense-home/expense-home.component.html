@@ -187,9 +187,13 @@
       <ng-container matColumnDef="action">
         <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
         <mat-cell *matCellDef="let element">
-          <!-- <button mat-icon-button color="warn" (click)="UpdateButton()">
+          <button
+            mat-icon-button
+            color="warn"
+            (click)="openUpdateDialog(element)"
+          >
             <mat-icon>edit</mat-icon>
-          </button> -->
+          </button>
           <button
             mat-icon-button
             color="warn"

@@ -6,6 +6,7 @@ import { DatePipe } from '@angular/common';
 import { AuthService } from '../../../services/auth/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Expense } from '../../../shared/model';
+import { UpdateDialogComponent } from '../../../shared/update-dialog/update-dialog.component';
 
 @Component({
   selector: 'app-expense-home',
@@ -186,5 +187,24 @@ export class ExpenseHomeComponent implements OnInit {
         this.calculateTotalAmount();
       }
     );
+  }
+  openUpdateDialog(expense: Expense) {
+    const dialogRef = this.dialog.open(UpdateDialogComponent, {
+      data: expense,
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        const index = this.dataSource.data.findIndex(
+          (e) => e._id === result._id
+        );
+        if (index !== -1) {
+          this.dataSource.data[index] = result;
+          this.dataSource._updateChangeSubscription();
+          this.calculateTotalAmount();
+        }
+      }
+    });
   }
 }

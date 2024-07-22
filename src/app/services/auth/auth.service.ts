@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { login, user } from '../../shared/model';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, map } from 'rxjs';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { SucessDialogComponent } from '../../shared/sucess-dialog/sucess-dialog.component';
 import { ErrorDialogComponent } from '../../shared/error-dialog/error-dialog.component';
 import jwt_decode from 'jwt-decode';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -27,21 +28,16 @@ export class AuthService {
       })
       .subscribe(
         (res) => {
-          this.isLoggedIn.next(true); // if(token then next)
-          console.warn(res.body);
+          this.isLoggedIn.next(true);
 
           const accessToken = res.body.accessToken;
           localStorage.setItem('token', accessToken);
 
-          // sessionStorage.setItem('id', id);
-
           this.router.navigate(['expense-home/expense-home']);
-          console.log('Opening success dialog...');
           this.dialog.open(SucessDialogComponent);
         },
         (error) => {
           console.error('Error:', error);
-          console.log('Opening error dialog...');
           this.dialog.open(ErrorDialogComponent);
         }
       );
@@ -49,8 +45,14 @@ export class AuthService {
 
   reload() {
     if (localStorage.getItem('token')) {
-      this.isLoggedIn.next(true);
-      this.router.navigate(['expense-home/expense-home']);
+      this.validateToken(localStorage.getItem('token')!).subscribe((valid) => {
+        if (valid) {
+          this.isLoggedIn.next(true);
+          this.router.navigate(['expense-home/expense-home']);
+        } else {
+          this.delibrateLogout();
+        }
+      });
     }
   }
 
@@ -63,15 +65,11 @@ export class AuthService {
       .subscribe(
         (res) => {
           this.isLoggedIn.next(true);
-          console.warn(res.body);
 
           const accessToken = res.body.accessToken;
-          const id = res.body.result._id;
           localStorage.setItem('token', accessToken);
-          // sessionStorage.setItem('id', id);
 
           this.router.navigate(['expense-home/expense-home']);
-          console.log('Opening success dialog...');
           this.dialog.open(SucessDialogComponent);
         },
         (error) => {
@@ -80,23 +78,6 @@ export class AuthService {
         }
       );
   }
-  //  async getIdFromToken(){
-  //     let token= localStorage.getItem('token')
-  //     if(token){
-  //      const decodedToken=await jwt_decode(token)
-  //     }else{
-  //       return null
-  //     }
-  //   }
-  //   decodeToken(){
-
-  //     try {
-  //       let token= localStorage.getItem('token')
-  //       return jwt_decode(token)
-  //     } catch (error) {
-
-  //     }
-  //   }
 
   base64UrlDecode(base64Url: string) {
     if (base64Url) {
@@ -121,11 +102,10 @@ export class AuthService {
   }
 
   getUserIdFromToken(token: any): string | null {
-    // token
-    // let token = localStorage.getItem(token')
     const decodedToken = this.decodeJwt(token);
     return decodedToken ? decodedToken.id : null;
   }
+
   decodeJwt(token: string): any {
     const payload = token.split('.')[1];
     const decodedPayload = this.base64UrlDecode(payload);
@@ -136,8 +116,19 @@ export class AuthService {
       return null;
     }
   }
+
   delibrateLogout() {
     localStorage.removeItem('token');
-    this.router.navigate(['auth/signup']);
+    this.isLoggedIn.next(false);
+    this.router.navigate(['auth/signin']);
   }
-} /// use in every component
+
+  validateToken(token: string) {
+    return this.http
+      .post<{ valid: boolean }>(
+        'http://localhost:5000/api/auth/validate-token',
+        { token }
+      )
+      .pipe(map((response) => response.valid));
+  }
+}
