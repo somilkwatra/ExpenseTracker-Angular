@@ -19,11 +19,19 @@ export class UpdateDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: Expense
   ) {
     this.expenseForm = this.fb.group({
-      date: [data.date, Validators.required],
-      name: [data.name, Validators.required],
-      amount: [data.amount, [Validators.required, Validators.min(0)]],
-      category: [data.category.name, Validators.required],
-      notes: [data.notes],
+      date: ['', Validators.required],
+      name: ['', Validators.required],
+      amount: ['', [Validators.required, Validators.min(0)]],
+      category: ['', Validators.required],
+      notes: [''],
+    });
+
+    this.expenseForm.patchValue({
+      date: data.date,
+      name: data.name,
+      amount: data.amount,
+      category: data.category.name,
+      notes: data.notes,
     });
   }
 
@@ -32,7 +40,6 @@ export class UpdateDialogComponent {
       const updatedExpense = {
         ...this.data,
         ...this.expenseForm.value,
-        category: { name: this.expenseForm.value.category },
       };
 
       this.expenseService

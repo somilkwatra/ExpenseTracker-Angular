@@ -14,20 +14,35 @@ import {
 })
 export class SpinnerComponent implements OnInit {
   loading = false;
+  private hideTimeout: any;
 
   constructor(private router: Router) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
-        this.loading = true;
+        console.log('Navigation started');
+        this.startLoading();
       } else if (
         event instanceof NavigationEnd ||
         event instanceof NavigationCancel ||
         event instanceof NavigationError
       ) {
-        this.loading = false;
+        console.log('Navigation ended');
+        this.stopLoading();
       }
     });
   }
 
   ngOnInit(): void {}
+
+  private startLoading() {
+    this.loading = true;
+    this.hideTimeout = setTimeout(() => {
+      this.loading = true;
+    }, 4000); // Delay for 4 seconds
+  }
+
+  private stopLoading() {
+    clearTimeout(this.hideTimeout);
+    this.loading = false;
+  }
 }

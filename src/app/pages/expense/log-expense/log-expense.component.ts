@@ -42,9 +42,9 @@ export class LogExpenseComponent implements OnInit {
   initExpenseForm() {
     this.expenseForm = this.formBuilder.group({
       name: ['', Validators.required],
-      amount: [0, Validators.required],
+      amount: [0, [Validators.required, Validators.min(1)]],
       category: ['', Validators.required],
-      notes: ['', Validators.required],
+      notes: [''],
       date: [new Date(), Validators.required],
     });
   }
@@ -52,15 +52,25 @@ export class LogExpenseComponent implements OnInit {
   showDialog() {
     const dialogRef = this.dialog.open(CategoryDialogComponent);
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe(() => {
       this.getCategoriesById();
     });
   }
 
   getCategoriesById() {
-    this.categoryService.getCategoryByUserId().subscribe((res: any) => {
-      this.categories = res;
-    });
+    this.categoryService.getCategoryByUserId().subscribe(
+      (res: any) => {
+        this.categories = res;
+      },
+      (error) => {
+        console.error('Error fetching categories:', error);
+        this.snackBar.open(
+          'Failed to load categories. Please try again later.',
+          'Close',
+          { duration: 5000 }
+        );
+      }
+    );
   }
 
   addExpenses() {
@@ -70,6 +80,9 @@ export class LogExpenseComponent implements OnInit {
 
       if (!userId) {
         console.error('User ID not found');
+        this.snackBar.open('User ID not found. Please log in again.', 'Close', {
+          duration: 5000,
+        });
         return;
       }
 
@@ -82,12 +95,24 @@ export class LogExpenseComponent implements OnInit {
         date: this.expenseForm.value.date.toISOString(),
       };
 
-      console.log(expenseData);
-      this.expenseService.addExpense(expenseData).subscribe((res) => {
-        if (res) {
+      this.expenseService.addExpense(expenseData).subscribe(
+        () => {
           console.log('Data Sent Successfully');
           this.dialog.open(ExpenseDialogComponent);
+          this.expenseForm.reset(); // Optionally reset form
+        },
+        (error) => {
+          console.error('Error adding expense:', error);
+          this.snackBar.open(
+            'Failed to add expense. Please try again later.',
+            'Close',
+            { duration: 5000 }
+          );
         }
+      );
+    } else {
+      this.snackBar.open('Please fill the complete form correctly.', 'Close', {
+        duration: 5000,
       });
     }
   }
@@ -100,13 +125,11 @@ export class LogExpenseComponent implements OnInit {
         );
       },
       (error) => {
-        console.error(error);
+        console.error('Error deleting category:', error);
         this.snackBar.open(
           'An expense has been associated with this category and it cannot be deleted.',
           'Close',
-          {
-            duration: 5000, // Display duration in milliseconds
-          }
+          { duration: 5000 }
         );
       }
     );
