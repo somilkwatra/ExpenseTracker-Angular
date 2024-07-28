@@ -18,5 +18,6 @@ export class SignInComponent {
   }
   SignIn(data: any) {
     this.authService.login(data);
+    
   }
 }

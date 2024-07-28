@@ -23,9 +23,13 @@ export class AuthService {
   userSignUp(data: user) {
     console.log('Service Called');
     this.http
-      .post<any>('http://localhost:5000/api/auth/register', data, {
-        observe: 'response',
-      })
+      .post<any>(
+        'https://backend-expense-tracker-evzg.onrender.com/api/auth/register',
+        data,
+        {
+          observe: 'response',
+        }
+      )
       .subscribe(
         (res) => {
           this.isLoggedIn.next(true);
@@ -59,9 +63,13 @@ export class AuthService {
   login(data: login) {
     console.log('Service Called');
     this.http
-      .post<any>('http://localhost:5000/api/auth/login', data, {
-        observe: 'response',
-      })
+      .post<any>(
+        'https://backend-expense-tracker-evzg.onrender.com/api/auth/login',
+        data,
+        {
+          observe: 'response',
+        }
+      )
       .subscribe(
         (res) => {
           this.isLoggedIn.next(true);
@@ -126,7 +134,7 @@ export class AuthService {
   validateToken(token: string) {
     return this.http
       .post<{ valid: boolean }>(
-        'http://localhost:5000/api/auth/validate-token',
+        'https://backend-expense-tracker-evzg.onrender.com/api/auth/validate-token',
         { token }
       )
       .pipe(map((response) => response.valid));
